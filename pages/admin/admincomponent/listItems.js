@@ -31,7 +31,9 @@ export default function mainListItems() {
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>
-        <ListItemText primary="Daftar Soal" />
+        <Link color="inherit" href="/admin/assesment" underline='none'>
+          <ListItemText primary="Daftar Soal" />
+        </Link>
       </ListItemButton>
       <ListItemButton>
         <ListItemIcon>
