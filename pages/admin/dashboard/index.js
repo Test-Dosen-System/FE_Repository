@@ -6,7 +6,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Navbar from '../admincomponent/navbar'
+import Navbar from '../../../components/admincomponent/navbar'
 
 const defaultTheme = createTheme();
 

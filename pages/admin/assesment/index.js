@@ -4,7 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
-import Navbar from '../admincomponent/navbar'
+import Navbar from '../../../components/admincomponent/navbar'
 
 const defaultTheme = createTheme();
 
