@@ -6,7 +6,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import LogoutIcon from '@mui/icons-material/Logout';
-import Link from '@mui/material/Link';
+import Link from 'next/link';
 
 export default function mainListItems() {
   return (
@@ -15,7 +15,10 @@ export default function mainListItems() {
         <ListItemIcon>
           <DashboardIcon />
         </ListItemIcon>
-        <Link color="inherit" href="/admin/dashboard" underline='none'>
+        <Link href="/admin/dashboard" style={{
+          textDecoration: 'none',
+          color: 'inherit',
+        }}>
           <ListItemText primary="Dashboard" />
         </Link>
       </ListItemButton>
@@ -23,7 +26,10 @@ export default function mainListItems() {
         <ListItemIcon>
           <NoteAddIcon />
         </ListItemIcon>
-        <Link color="inherit" href="/admin/createAssesment" underline='none'>
+        <Link href="/admin/createAssesment" style={{
+          textDecoration: 'none',
+          color: 'inherit',
+        }}>
           <ListItemText primary="Buat Soal" />
         </Link>
       </ListItemButton>
@@ -31,7 +37,10 @@ export default function mainListItems() {
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>
-        <Link color="inherit" href="/admin/assesment" underline='none'>
+        <Link href="/admin/assesment" style={{
+          textDecoration: 'none',
+          color: 'inherit',
+        }}>
           <ListItemText primary="Daftar Soal" />
         </Link>
       </ListItemButton>
