@@ -13,6 +13,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import ListItems from './listItems';
+import Head from 'next/head';
 
 const drawerWidth = 240;
 
@@ -73,6 +74,9 @@ export default function navbar(props) {
 
   return (
     <>
+      <Head>
+        <title>Dashboard || {navName}</title>
+      </Head>
       <ThemeProvider theme={defaultTheme}>
         <CssBaseline />
         <AppBar position="absolute" open={open}>
