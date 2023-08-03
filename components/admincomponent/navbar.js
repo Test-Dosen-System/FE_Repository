@@ -13,7 +13,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import ListItems from './listItems';
-import { useRouter } from 'next/router'
 
 const drawerWidth = 240;
 
@@ -64,12 +63,13 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function navbar() {
+export default function navbar(props) {
+  const { navName } = props;
+
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
-  const { pathname } = useRouter()
 
   return (
     <>
@@ -100,9 +100,7 @@ export default function navbar() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              {pathname === '/admin/dashboard' ? 'Dashboard' : ''}
-              {pathname === '/admin/createAssesment' ? 'Buat Soal Test' : ''}
-              {pathname === '/admin/assesment' ? 'Daftar Soal Test' : ''}
+              {navName}
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">

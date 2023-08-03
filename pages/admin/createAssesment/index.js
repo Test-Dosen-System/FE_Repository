@@ -14,7 +14,7 @@ export default function CreateAssesment() {
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <Navbar />
+        <Navbar navName="Buat Soal Test" />
         <Box
           component="main"
           sx={{

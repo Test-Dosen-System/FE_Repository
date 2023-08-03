@@ -16,7 +16,7 @@ export default function Dashboard() {
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <Navbar />
+        <Navbar navName="Dashboard" />
         <Box
           component="main"
           sx={{
