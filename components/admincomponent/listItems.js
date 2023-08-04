@@ -7,8 +7,18 @@ import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import SweatAlertTimer from '@/config/SweatAlert/timer';
 
 export default function mainListItems() {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    localStorage.clear()
+    router.push('/admin/login')
+    SweatAlertTimer("Logout berhasil", "success");
+  }
+
   return (
     <>
       <ListItemButton>
@@ -48,7 +58,7 @@ export default function mainListItems() {
         <ListItemIcon>
           <LogoutIcon />
         </ListItemIcon>
-        <ListItemText primary="Logout" />
+        <ListItemText primary="Logout" onClick={handleLogout} />
       </ListItemButton>
     </>
   )

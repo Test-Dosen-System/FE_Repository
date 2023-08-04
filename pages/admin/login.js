@@ -1,3 +1,5 @@
+'use client'
+
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -11,17 +13,41 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { useRouter } from 'next/router';
+import API from '../../services/axiosInterceptorInstance';
+import { useDispatch } from 'react-redux';
+// import { login } from '../../services/authService';
+import { useForm } from 'react-hook-form';
+import SweatAlert from '@/config/SweatAlert';
 
 export default function SignIn() {
+    const router = useRouter();
+    // const dispatch = useDispatch();
+    const { register, handleSubmit } = useForm();
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
-    };
+    const onSubmit = async (data) => {
+        try {
+            const response = await API.post('/user/login', {
+                username: data.username,
+                password: data.password
+            })
+            const tokenz = response.data.token;
+            API.defaults.headers["Authorization"] = `Bearer ${tokenz}`;
+            localStorage.setItem('username', JSON.stringify(response.data.data.payload.username))
+            localStorage.setItem('id', JSON.stringify(response.data.data.payload.id))
+            localStorage.setItem('token', tokenz)
+            localStorage.setItem("isLogged", true);
+            localStorage.setItem("role", JSON.stringify(response.data.data.payload.roles));
+            SweatAlert(response.data.message, "success");
+            router.push('/admin/dashboard')
+        } catch (error) {
+            if (error.response.status === 404) {
+                SweatAlert(error.response.data.message, "warning");
+            } else {
+                SweatAlert(error.response.data.message[0].message, "error");
+            }
+        }
+    }
 
     return (
         <Container component="main" maxWidth="xs">
@@ -40,7 +66,7 @@ export default function SignIn() {
                 <Typography component="h1" variant="h5">
                     Login Admin
                 </Typography>
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1 }}>
                     <TextField
                         margin="normal"
                         required
@@ -50,6 +76,7 @@ export default function SignIn() {
                         name="username"
                         autoComplete="username"
                         autoFocus
+                        {...register("username", { required: true })}
                     />
                     <TextField
                         margin="normal"
@@ -60,6 +87,7 @@ export default function SignIn() {
                         type="password"
                         id="password"
                         autoComplete="current-password"
+                        {...register("password", { required: true })}
                     />
 
                     <FormControlLabel
@@ -70,7 +98,7 @@ export default function SignIn() {
                         type="submit"
                         fullWidth
                         variant="contained"
-                        color="success"
+                        color="warning"
                         sx={{ mt: 3, mb: 2 }}
                     >
                         Login
