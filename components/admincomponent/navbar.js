@@ -62,7 +62,18 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 // TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
+const defaultTheme = createTheme(
+  {
+    palette: {
+      primary: {
+        main: '#FEDA56',
+      },
+      secondary: {
+        main: '#F77F00',
+      },
+    }
+  }
+);
 
 export default function navbar(props) {
   const { navName } = props;
@@ -75,14 +86,15 @@ export default function navbar(props) {
   return (
     <>
       <Head>
-        <title>Dashboard || {navName}</title>
+        <title>Dashboard</title>
       </Head>
       <ThemeProvider theme={defaultTheme}>
         <CssBaseline />
         <AppBar position="absolute" open={open}>
           <Toolbar
             sx={{
-              pr: '24px', // keep right padding when drawer closed
+              pr: '24px',
+              bgcolor: 'secondary.main', // keep right padding when drawer closed
             }}
           >
             <IconButton
@@ -100,14 +112,14 @@ export default function navbar(props) {
             <Typography
               component="h1"
               variant="h6"
-              color="inherit"
+              color="white"
               noWrap
               sx={{ flexGrow: 1 }}
             >
               {navName}
             </Typography>
             <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
+              <Badge badgeContent={0} color="primary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>

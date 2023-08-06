@@ -4,17 +4,17 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
-import Navbar from '../../../components/admincomponent/navbar'
+import Navbar from '../../../../components/admincomponent/navbar'
 
 const defaultTheme = createTheme();
 
-export default function CreateAssesment() {
+export default function AssesmentSkda() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <Navbar navName="Buat Soal Test" />
+        <Navbar navName="Daftar Soal SKDA" />
         <Box
           component="main"
           sx={{
@@ -29,7 +29,7 @@ export default function CreateAssesment() {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            Assesment Here
+            All SKDA Assesment Here
           </Container>
         </Box>
       </Box>
