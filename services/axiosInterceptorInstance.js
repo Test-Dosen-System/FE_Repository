@@ -1,32 +1,17 @@
-'use client';
-
-import axios from "axios";
+import axios from 'axios';
+import { useSession } from "next-auth/react";
 
 const API = axios.create({
-  baseURL: "http://localhost:1242",
-  headers: {
-    Accept: "application/json",
-  },
+  baseURL: 'http://localhost:1242',
 });
 
-
-API.interceptors.response.use(
-  (res) => {
-    return res;
-  },
-  (err) => {
-    if (err.response.status !== 401) {
-      throw err;
-    }
-    throw err;
-    // console.log(err.response)
-    // if (typeof err.response.data.error.name !== 'undefined') {
-    //   if ( err.response.data.error.name === 'TokenExpiredError') {
-    //     // store.dispatch(logout());
-    //     throw err
-    //   }
-    // }
+// Tambahkan interceptor untuk mengirim token otentikasi jika ada
+API.interceptors.request.use(async (config) => {
+  const session = await useSession();
+  if (session?.user?.token) {
+    config.headers.Authorization = `Bearer ${session.user.token}`;
   }
-);
+  return config;
+});
 
 export default API;

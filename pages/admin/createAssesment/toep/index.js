@@ -1,4 +1,7 @@
 import * as React from 'react';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { useSession } from "next-auth/react";
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -16,7 +19,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setKategoriSoal } from '../../../../config/redux/slices/kategoriSoalSlice'
 
 export default function CreateAssesmentToep() {
-
+  const router = useRouter();
+  const { data: session, status } = useSession();
+  useEffect(() => {
+    if (!session) {
+      router.push('/admin/login')
+    }
+  }, [])
   const dispatch = useDispatch();
 
   const kategoriSoalShow = useSelector((state) => state.kategoriSoal.kategoriSoalShow);

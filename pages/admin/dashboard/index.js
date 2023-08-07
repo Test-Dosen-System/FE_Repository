@@ -1,4 +1,6 @@
-import * as React from 'react';
+'use client'
+
+import { useEffect } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -7,10 +9,20 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Navbar from '../../../components/admincomponent/navbar'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router';
 
 const defaultTheme = createTheme();
 
 export default function Dashboard() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!session) {
+      router.push('/admin/login')
+    }
+  }, [])
 
   return (
     <ThemeProvider theme={defaultTheme}>

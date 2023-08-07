@@ -17,6 +17,7 @@ import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import DnsIcon from '@mui/icons-material/Dns';
 import FactCheckIcon from '@mui/icons-material/FactCheck';
+import { signOut } from 'next-auth/react'
 
 export default function mainListItems() {
   const router = useRouter();
@@ -33,9 +34,8 @@ export default function mainListItems() {
   };
 
   const handleLogout = () => {
-    localStorage.clear()
-    router.push('/admin/login')
-    SweatAlertTimer("Logout berhasil", "success");
+    signOut({ callbackUrl: '/admin/login' });
+    SweatAlertTimer("Logout Sucessfully", "success");
   }
 
   return (

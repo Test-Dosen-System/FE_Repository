@@ -1,4 +1,7 @@
 import * as React from 'react';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { useSession } from "next-auth/react";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -18,6 +21,14 @@ import { setKategoriSoalSkda } from '../../../../config/redux/slices/kategoriSoa
 const defaultTheme = createTheme();
 
 export default function CreateAssesmentSkda() {
+
+  const router = useRouter();
+  const { data: session, status } = useSession();
+  useEffect(() => {
+    if (!session) {
+      router.push('/admin/login')
+    }
+  }, [])
 
   const dispatch = useDispatch();
 

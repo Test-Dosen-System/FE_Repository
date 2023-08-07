@@ -19,35 +19,89 @@ import { useDispatch } from 'react-redux';
 // import { login } from '../../services/authService';
 import { useForm } from 'react-hook-form';
 import SweatAlert from '@/config/SweatAlert';
+import { signIn, useSession } from 'next-auth/react'
 
 export default function SignIn() {
+    const { data: session } = useSession();
+
     const router = useRouter();
     // const dispatch = useDispatch();
     const { register, handleSubmit } = useForm();
 
+    // const onSubmit = async (data) => {
+    //     try {
+    //         const response = await API.post('/user/login', {
+    //             username: data.username,
+    //             password: data.password
+    //         })
+    //         const tokenz = response.data.token;
+    //         API.defaults.headers["Authorization"] = `Bearer ${tokenz}`;
+    //         localStorage.setItem('username', JSON.stringify(response.data.data.payload.username))
+    //         localStorage.setItem('id', JSON.stringify(response.data.data.payload.id))
+    //         localStorage.setItem('token', tokenz)
+    //         localStorage.setItem("isLogged", true);
+    //         localStorage.setItem("role", JSON.stringify(response.data.data.payload.roles));
+    //         SweatAlert(response.data.message, "success");
+    //         router.push('/admin/dashboard')
+    //     } catch (error) {
+    //         if (error.response.status === 404) {
+    //             SweatAlert(error.response.data.message, "warning");
+    //         } else {
+    //             SweatAlert(error.response.data.message[0].message, "error");
+    //         }
+    //     }
+    // }
+
+    // const onSubmit = async (data) => {
+    //     try {
+    //         const response = await signIn('credentials', {
+    //             username: data.username,
+    //             password: data.password,
+    //             redirect: false,
+    //         })
+    //         // SweatAlert(response.data.message, "success");
+    //         console.log(response)
+    //         router.push('/admin/dashboard')
+    //     } catch (error) {
+    //         console.log(error)
+    //         // if (error.response.status === 404) {
+    //         //     SweatAlert(error.response.data.message, "warning");
+    //         // } else {
+    //         //     SweatAlert(error.response.data.message[0].message, "error");
+    //         // }
+    //     }
+    // }
+
     const onSubmit = async (data) => {
-        try {
-            const response = await API.post('/user/login', {
-                username: data.username,
-                password: data.password
-            })
-            const tokenz = response.data.token;
-            API.defaults.headers["Authorization"] = `Bearer ${tokenz}`;
-            localStorage.setItem('username', JSON.stringify(response.data.data.payload.username))
-            localStorage.setItem('id', JSON.stringify(response.data.data.payload.id))
-            localStorage.setItem('token', tokenz)
-            localStorage.setItem("isLogged", true);
-            localStorage.setItem("role", JSON.stringify(response.data.data.payload.roles));
-            SweatAlert(response.data.message, "success");
-            router.push('/admin/dashboard')
-        } catch (error) {
-            if (error.response.status === 404) {
-                SweatAlert(error.response.data.message, "warning");
+        signIn('credentials', {
+            username: data.username,
+            password: data.password,
+            redirect: false,
+        }).then((response) => {
+            if (response.error === "CredentialsSignin") {
+                SweatAlert("Username or Password is'nt correct", "error");
             } else {
-                SweatAlert(error.response.data.message[0].message, "error");
+                SweatAlert("Login Sucessfully", "success");
+                router.push('/admin/dashboard')
             }
         }
+        )
     }
+
+    // const onSubmit = async (data) => {
+    //     const result = await signIn('credentials', {
+    //         username: data.username,
+    //         password: data.password,
+    //         redirect: false,
+    //     })
+    //     if (result.error) {
+    //         SweatAlert(result.error, "error");
+    //     } else {
+    //         SweatAlert(result.message, "success");
+    //         router.push('/admin/dashboard')
+    //     }
+    // }
+
 
     return (
         <Container component="main" maxWidth="xs">
