@@ -55,7 +55,7 @@ export default function mainListItems() {
         <ListItemIcon>
           <NoteAddIcon />
         </ListItemIcon>
-        <ListItemText primary="Buat Soal" />
+        <ListItemText primary="Soal" />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
@@ -68,10 +68,10 @@ export default function mainListItems() {
               textDecoration: 'none',
               color: 'inherit',
             }}>
-              <ListItemText primary="Buat Soal TOEP" />
+              <ListItemText primary="Buat Soal" />
             </Link>
           </ListItemButton>
-          <ListItemButton sx={{ pl: 4 }}>
+          {/* <ListItemButton sx={{ pl: 4 }}>
             <ListItemIcon>
               <PlaylistAddIcon />
             </ListItemIcon>
@@ -81,7 +81,7 @@ export default function mainListItems() {
             }}>
               <ListItemText primary="Buat Soal SKDA" />
             </Link>
-          </ListItemButton>
+          </ListItemButton> */}
         </List>
       </Collapse>
       <ListItemButton onClick={handleClick2}>

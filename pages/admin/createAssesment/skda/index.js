@@ -1,4 +1,5 @@
-import * as React from 'react';
+'use client';
+
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useSession } from "next-auth/react";
@@ -24,11 +25,11 @@ export default function CreateAssesmentSkda() {
 
   const router = useRouter();
   const { data: session, status } = useSession();
-  useEffect(() => {
-    if (!session) {
-      router.push('/admin/login')
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (!session) {
+  //     router.push('/admin/login')
+  //   }
+  // }, [])
 
   const dispatch = useDispatch();
 

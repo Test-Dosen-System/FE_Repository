@@ -1,4 +1,5 @@
-import * as React from 'react';
+'use client';
+
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useSession } from "next-auth/react";
@@ -14,34 +15,38 @@ import Button from '@mui/material/Button';
 import ToepText from '../../../../components/toepAssesmentComponent/toeptext'
 import ToepGambar from '../../../../components/toepAssesmentComponent/toepgambar'
 import ToepAudio from '../../../../components/toepAssesmentComponent/toepaudio'
+import Choose from '../../../../components/toepAssesmentComponent/choose'
 import theme from '../../../../config/theme'
 import { useDispatch, useSelector } from 'react-redux'
 import { setKategoriSoal } from '../../../../config/redux/slices/kategoriSoalSlice'
+import { setJenisSoal } from '../../../../config/redux/slices/jenisSoalSlice'
 
 export default function CreateAssesmentToep() {
   const router = useRouter();
   const { data: session, status } = useSession();
-  useEffect(() => {
-    if (!session) {
-      router.push('/admin/login')
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (!session) {
+  //     router.push('/admin/login')
+  //   }
+  // }, [])
   const dispatch = useDispatch();
 
   const kategoriSoalShow = useSelector((state) => state.kategoriSoal.kategoriSoalShow);
-  console.log(kategoriSoalShow)
+  const jenisSoalShow = useSelector((state) => state.jenisSoal.jenisSoalShow);
+  // console.log(kategoriSoalShow)
+  // console.log(jenisSoalShow)
 
   // Render different components based on the state
   const renderComponent = () => {
-    switch (kategoriSoalShow) {
-      case "teks":
+    switch (jenisSoalShow) {
+      case "Teks":
         return <ToepText />;
-      case "gambar":
+      case "Gambar":
         return <ToepGambar />;
-      case "audio":
+      case "Audio":
         return <ToepAudio />;
       default:
-        return <ToepText />;
+        return <Choose />;
     }
   };
 
@@ -49,7 +54,7 @@ export default function CreateAssesmentToep() {
     <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <Navbar navName="Buat Soal Test TOEP" />
+        <Navbar navName="Buat Soal Test TOEP dan TKDA" />
         <Box
           component="main"
           sx={{
@@ -76,30 +81,47 @@ export default function CreateAssesmentToep() {
                 >
                   Jenis Soal
                   <Grid item xs={12} md={12} lg={12}>
-                    <Button variant={kategoriSoalShow === "teks" ? "contained" : "outlined"} color="primary" onClick={() => dispatch(setKategoriSoal("teks"))}
+                    <Button variant={jenisSoalShow === "Teks" ? "contained" : "outlined"} color="primary" onClick={() => dispatch(setJenisSoal("Teks"))}
                       sx={{
                         mr: 2,
-                        width: 200
+                        width: 100
                       }}>
                       Teks
                     </Button>
-                    <Button variant={kategoriSoalShow === "gambar" ? "contained" : "outlined"} color="primary" onClick={() => dispatch(setKategoriSoal("gambar"))}
+                    <Button variant={jenisSoalShow === "Gambar" ? "contained" : "outlined"} color="primary" onClick={() => dispatch(setJenisSoal("Gambar"))}
                       sx={{
                         mr: 2,
-                        width: 200
+                        width: 100
                       }}>
                       Gambar
                     </Button>
-                    <Button variant={kategoriSoalShow === "audio" ? "contained" : "outlined"} color="primary" onClick={() => dispatch(setKategoriSoal("audio"))}
+                    <Button variant={jenisSoalShow === "Audio" ? "contained" : "outlined"} color="primary" onClick={() => dispatch(setJenisSoal("Audio"))}
                       sx={{
                         mr: 2,
-                        width: 200
+                        width: 100
                       }}>
                       Audio
                     </Button>
-                    {renderComponent()}
-                  </Grid>
 
+                    <Button variant={kategoriSoalShow === "TOEP" ? "contained" : "outlined"} color="secondary" onClick={() => dispatch(setKategoriSoal("TOEP"))}
+                      sx={{
+                        ml: 3,
+                        width: 100
+                      }}>
+                      TOEP
+                    </Button>
+                    <Button variant={kategoriSoalShow === "TKDA" ? "contained" : "outlined"} color="secondary" onClick={() => dispatch(setKategoriSoal("TKDA"))}
+                      sx={{
+                        ml: 1,
+                        width: 100
+                      }}>
+                      TKDA
+                    </Button>
+
+
+
+                  </Grid>
+                  {renderComponent()}
                 </Paper>
               </Grid>
             </Grid>

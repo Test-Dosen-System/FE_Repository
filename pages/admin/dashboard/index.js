@@ -18,11 +18,11 @@ export default function Dashboard() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  useEffect(() => {
-    if (!session) {
-      router.push('/admin/login')
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (!session) {
+  //     router.push('/admin/login')
+  //   }
+  // }, [])
 
   return (
     <ThemeProvider theme={defaultTheme}>
