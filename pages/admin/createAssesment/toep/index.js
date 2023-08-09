@@ -39,11 +39,11 @@ export default function CreateAssesmentToep() {
   // Render different components based on the state
   const renderComponent = () => {
     switch (jenisSoalShow) {
-      case "Teks":
+      case "TEKS":
         return <ToepText />;
-      case "Gambar":
+      case "GAMBAR":
         return <ToepGambar />;
-      case "Audio":
+      case "AUDIO":
         return <ToepAudio />;
       default:
         return <Choose />;
@@ -79,23 +79,23 @@ export default function CreateAssesmentToep() {
                     height: '100%',
                   }}
                 >
-                  Jenis Soal
+
                   <Grid item xs={12} md={12} lg={12}>
-                    <Button variant={jenisSoalShow === "Teks" ? "contained" : "outlined"} color="primary" onClick={() => dispatch(setJenisSoal("Teks"))}
+                    <Button variant={jenisSoalShow === "TEKS" ? "contained" : "outlined"} color="primary" onClick={() => dispatch(setJenisSoal("TEKS"))}
                       sx={{
                         mr: 2,
                         width: 100
                       }}>
                       Teks
                     </Button>
-                    <Button variant={jenisSoalShow === "Gambar" ? "contained" : "outlined"} color="primary" onClick={() => dispatch(setJenisSoal("Gambar"))}
+                    <Button variant={jenisSoalShow === "GAMBAR" ? "contained" : "outlined"} color="primary" onClick={() => dispatch(setJenisSoal("GAMBAR"))}
                       sx={{
                         mr: 2,
                         width: 100
                       }}>
                       Gambar
                     </Button>
-                    <Button variant={jenisSoalShow === "Audio" ? "contained" : "outlined"} color="primary" onClick={() => dispatch(setJenisSoal("Audio"))}
+                    <Button variant={jenisSoalShow === "AUDIO" ? "contained" : "outlined"} color="primary" onClick={() => dispatch(setJenisSoal("AUDIO"))}
                       sx={{
                         mr: 2,
                         width: 100

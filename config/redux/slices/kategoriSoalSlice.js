@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  kategoriSoal: "default"
+  kategoriSoal: "TOEP"
 };
 
 const kategoriSoalSlice = createSlice({
