@@ -78,14 +78,23 @@ export default function SignIn() {
             password: data.password,
             redirect: false,
         }).then((response) => {
-            if (response.error === "CredentialsSignin") {
-                SweatAlert("Username or Password is'nt correct", "error");
-            } else if (response.status === 500)
-                SweatAlert("Server Error", "error");
-            else {
+            console.log(response)
+            if (response.status === 200) {
                 SweatAlert("Login Successfully", "success");
                 router.push('/admin/dashboard')
+            } else if (response.error === "CredentialsSignin") {
+                SweatAlert("Username or Password is'nt correct", "warning");
+            } else {
+                SweatAlert("Internal Server Error", "error");
             }
+            // if (response.error === "CredentialsSignin") {
+            //     SweatAlert("Username or Password is'nt correct", "error");
+            // } else if (response.status === 500)
+            //     SweatAlert("Server Error", "error");
+            // else {
+            //     SweatAlert("Login Successfully", "success");
+            //     router.push('/admin/dashboard')
+            // }
         }
         )
     }
