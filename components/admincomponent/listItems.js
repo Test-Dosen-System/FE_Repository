@@ -71,17 +71,17 @@ export default function mainListItems() {
               <ListItemText primary="Buat Soal" />
             </Link>
           </ListItemButton>
-          {/* <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton sx={{ pl: 4 }}>
             <ListItemIcon>
               <PlaylistAddIcon />
             </ListItemIcon>
-            <Link href="/admin/createAssesment/skda" style={{
+            <Link href="/admin/createAssesment/excelFile" style={{
               textDecoration: 'none',
               color: 'inherit',
             }}>
-              <ListItemText primary="Buat Soal SKDA" />
+              <ListItemText primary="Import Soal Excel" />
             </Link>
-          </ListItemButton> */}
+          </ListItemButton>
         </List>
       </Collapse>
       <ListItemButton onClick={handleClick2}>
