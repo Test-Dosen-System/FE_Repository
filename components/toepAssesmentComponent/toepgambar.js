@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react'
 import { ThemeProvider } from '@mui/material/styles';
 import { Box, TextField, Grid, Button, Select, IconButton } from '@mui/material'
@@ -43,10 +45,11 @@ export default function toepgambar() {
 
   const onSubmit = async (data) => {
     try {
-      // console.log(data)
-      const response = await axios.post('http://localhost:1242/soal/create-soal-file', data, {
+      console.log(data)
+      const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + '/soal/create-soal-gambar', data, {
         headers: {
-          'Authorization': `Bearer ${session.user.token}`
+          'Authorization': `Bearer ${session.user.token}`,
+          'Content-Type': 'multipart/form-data'
         },
       })
       SweatAlertTimer(response.data.message, "success");

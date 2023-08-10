@@ -1,5 +1,5 @@
 import { ThemeProvider } from '@mui/material/styles';
-import { Box, TextField, Grid, Button, Select, IconButton } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import theme from '../../config/theme'
 
 
@@ -10,9 +10,12 @@ export default function toepaudio() {
         display="flex"
         justifyContent="center"
         alignItems="center"
+        height={100}
         marginTop={5}
         marginBottom={5}>
-        Pilih Jenis Soal dan Kategori Soal
+        <Typography variant="h5" >
+          Pilih Jenis Soal dan Kategori Soal
+        </Typography>
       </Box>
     </ThemeProvider>
   )

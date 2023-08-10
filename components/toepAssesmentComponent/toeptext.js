@@ -1,3 +1,5 @@
+'use client';
+
 import { Box, TextField, Grid, Button, Select } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { useSession } from "next-auth/react";
@@ -27,7 +29,7 @@ export default function toeptext() {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post('http://localhost:1242/soal/create-soal-teks', data, {
+      const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + '/soal/create-soal-teks', data, {
         headers: {
           'Authorization': `Bearer ${session.user.token}`
         },
