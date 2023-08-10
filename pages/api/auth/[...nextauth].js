@@ -14,7 +14,7 @@ export default NextAuth({
                 // Add your authentication logic here
                 // For example, make an API call to validate credentials
                 try {
-                    const res = await fetch("http://localhost:1242/user/login", {
+                    const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/user/login", {
                         method: "POST",
                         body: JSON.stringify(credentials),
                         headers: { "Content-Type": "application/json" },

@@ -80,8 +80,10 @@ export default function SignIn() {
         }).then((response) => {
             if (response.error === "CredentialsSignin") {
                 SweatAlert("Username or Password is'nt correct", "error");
-            } else {
-                SweatAlert("Login Sucessfully", "success");
+            } else if (response.status === 500)
+                SweatAlert("Server Error", "error");
+            else {
+                SweatAlert("Login Successfully", "success");
                 router.push('/admin/dashboard')
             }
         }
