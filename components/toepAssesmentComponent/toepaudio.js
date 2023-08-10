@@ -48,7 +48,7 @@ export default function toepaudio() {
       SweatAlertTimer(response.data.message, "success");
     }
     catch (error) {
-      SweatAlertTimer(response.data.message, "error");
+      SweatAlertTimer("Failed to create soal", "error");
     }
   }
 
@@ -81,7 +81,7 @@ export default function toepaudio() {
         />
         Jawaban
         <Grid container spacing={2}>
-          <Grid item xs={12} md={6} lg={6}>
+          <Grid item xs={12} md={6} lg={4}>
             <TextField
               id="outlined-textarea"
               label="Jawaban A"
@@ -92,7 +92,7 @@ export default function toepaudio() {
               {...register("jawaban_a")}
             />
           </Grid>
-          <Grid item xs={12} md={6} lg={6}>
+          <Grid item xs={12} md={6} lg={4}>
             <TextField
               id="outlined-textarea"
               label="Jawaban B"
@@ -103,7 +103,7 @@ export default function toepaudio() {
               {...register("jawaban_b")}
             />
           </Grid>
-          <Grid item xs={12} md={6} lg={6}>
+          <Grid item xs={12} md={6} lg={4}>
             <TextField
               id="outlined-textarea"
               label="Jawaban C"
@@ -114,7 +114,7 @@ export default function toepaudio() {
               {...register("jawaban_c")}
             />
           </Grid>
-          <Grid item xs={12} md={6} lg={6}>
+          <Grid item xs={12} md={6} lg={4}>
             <TextField
               id="outlined-textarea"
               label="Jawaban D"
@@ -125,7 +125,7 @@ export default function toepaudio() {
               {...register("jawaban_d")}
             />
           </Grid>
-          <Grid item xs={12} md={6} lg={6}>
+          <Grid item xs={12} md={6} lg={4}>
             <TextField
               id="outlined-textarea"
               label="Jawaban E (Opsional)"
@@ -135,22 +135,21 @@ export default function toepaudio() {
               {...register("jawaban_e")}
             />
           </Grid>
-          <Grid item xs={12} md={6} lg={6}>
-            <Select
-              native
+          <Grid item xs={12} md={12} lg={12}>
+            Kunci Jawaban
+            <TextField
+              id="outlined-textarea"
+              label="Copy Jawaban Benar"
+              multiline
+              size='small'
               fullWidth
               required
-              sx={{ mb: 2, height: 30 }}
               {...register("jawaban_benar")}
-            >
-              <option>Pilih Jawaban Benar...</option>
-              <option value="jawaban_a">Jawaban A</option>
-              <option value="jawaban_b">Jawaban B</option>
-              <option value="jawaban_c">Jawaban C</option>
-              <option value="jawaban_d">Jawaban D</option>
-              <option value="jawaban_e">Jawaban E</option>
-            </Select>
-            <Button variant="contained" color='primary' type='submit'>
+            />
+            <Button variant="contained" color='primary' type='submit'
+              sx={{
+                marginTop: 2,
+              }}>
               Simpan
             </Button>
           </Grid>
