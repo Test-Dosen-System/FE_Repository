@@ -22,11 +22,13 @@ export default NextAuth({
                     const user = await res.json();
                     if (res.ok && user) {
                         return user;
+                    } else {
+                        throw new Error(user.message)
                     }
-                    return null;
                 } catch (error) {
-                    // console.log(error.response.data.message)
-                    throw new Error(error.res.data);
+                    console.log(error.message)
+                    // throw new Error(error.res.data);
+                    throw new Error(error.message)
                 }
             },
         }),
@@ -43,8 +45,8 @@ export default NextAuth({
             return session;
         },
     },
-    secret: "secret",
+    secret: process.env.NEXTAUTH_SECRET,
     pages: {
-        signIn: '/admin/login',
+        signIn: '/login',
     },
 });
