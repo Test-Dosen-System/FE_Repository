@@ -95,13 +95,13 @@ export default function CreateAssesmentSkda() {
                       }}>
                       Gambar
                     </Button>
-                    <Button variant={kategoriSoalSkdaShow === "audioskda" ? "contained" : "outlined"} color="primary" onClick={() => dispatch(setKategoriSoalSkda("audioskda"))}
+                    {/* <Button variant={kategoriSoalSkdaShow === "audioskda" ? "contained" : "outlined"} color="primary" onClick={() => dispatch(setKategoriSoalSkda("audioskda"))}
                       sx={{
                         mr: 2,
                         width: 200
                       }}>
                       Audio
-                    </Button>
+                    </Button> */}
                     {renderComponentSkda()}
                   </Grid>
 

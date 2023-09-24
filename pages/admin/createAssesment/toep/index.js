@@ -54,7 +54,7 @@ export default function CreateAssesmentToep() {
     <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <Navbar navName="Buat Soal Test TOEP dan TKDA" />
+        <Navbar navName="Buat Soal Test TOEP" />
         <Box
           component="main"
           sx={{
@@ -83,27 +83,25 @@ export default function CreateAssesmentToep() {
                   <Grid item xs={12} md={12} lg={12}>
                     <Button variant={jenisSoalShow === "TEKS" ? "contained" : "outlined"} color="primary" onClick={() => dispatch(setJenisSoal("TEKS"))}
                       sx={{
-                        mr: 2,
-                        width: 100
+                        mr: 2
                       }}>
-                      Teks
+                      Teks/Reading
                     </Button>
-                    <Button variant={jenisSoalShow === "GAMBAR" ? "contained" : "outlined"} color="primary" onClick={() => dispatch(setJenisSoal("GAMBAR"))}
+                    {/* <Button variant={jenisSoalShow === "GAMBAR" ? "contained" : "outlined"} color="primary" onClick={() => dispatch(setJenisSoal("GAMBAR"))}
                       sx={{
                         mr: 2,
                         width: 100
                       }}>
                       Gambar
-                    </Button>
+                    </Button> */}
                     <Button variant={jenisSoalShow === "AUDIO" ? "contained" : "outlined"} color="primary" onClick={() => dispatch(setJenisSoal("AUDIO"))}
                       sx={{
-                        mr: 2,
-                        width: 100
+                        mr: 2
                       }}>
-                      Audio
+                      Audio/Listening
                     </Button>
 
-                    <Button variant={kategoriSoalShow === "TOEP" ? "contained" : "outlined"} color="secondary" onClick={() => dispatch(setKategoriSoal("TOEP"))}
+                    {/* <Button variant={kategoriSoalShow === "TOEP" ? "contained" : "outlined"} color="secondary" onClick={() => dispatch(setKategoriSoal("TOEP"))}
                       sx={{
                         ml: 3,
                         width: 100
@@ -116,7 +114,7 @@ export default function CreateAssesmentToep() {
                         width: 100
                       }}>
                       TKDA
-                    </Button>
+                    </Button> */}
 
 
 
