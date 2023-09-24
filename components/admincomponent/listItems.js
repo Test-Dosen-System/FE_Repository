@@ -34,7 +34,7 @@ export default function mainListItems() {
   };
 
   const handleLogout = () => {
-    signOut({ callbackUrl: '/admin/login' });
+    signOut({ callbackUrl: '/login' });
     SweatAlertTimer("Logout Sucessfully", "success");
   }
 
@@ -68,7 +68,18 @@ export default function mainListItems() {
               textDecoration: 'none',
               color: 'inherit',
             }}>
-              <ListItemText primary="Buat Soal" />
+              <ListItemText primary="Buat Soal TOEP" />
+            </Link>
+          </ListItemButton>
+          <ListItemButton sx={{ pl: 4 }}>
+            <ListItemIcon>
+              <PlaylistAddCheckIcon />
+            </ListItemIcon>
+            <Link href="/admin/createAssesment/skda" style={{
+              textDecoration: 'none',
+              color: 'inherit',
+            }}>
+              <ListItemText primary="Buat Soal TKDA" />
             </Link>
           </ListItemButton>
           <ListItemButton sx={{ pl: 4 }}>
