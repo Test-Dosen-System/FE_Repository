@@ -23,16 +23,10 @@ export default function toepgambar() {
   const filesImage = image.raw;
 
   useEffect(() => {
-    if (kategoriSoal) {
-      setValue("kategori_soal", kategoriSoal)
-    }
-    if (jenisSoal) {
-      setValue("jenis_soal", jenisSoal)
-    }
     if (image) {
       setValue("fileSoal", filesImage)
     }
-  }, [kategoriSoal, jenisSoal, filesImage, setValue])
+  }, [filesImage, setValue])
 
   const handleChange = (e) => {
     if (e.target.files.length) {
@@ -62,7 +56,6 @@ export default function toepgambar() {
     <ThemeProvider theme={theme}>
       <Box component="form" onSubmit={handleSubmit(onSubmit)}
         marginTop={2}>
-        Soal {kategoriSoal} Jenis {jenisSoal}
         <Box
           display="flex"
           justifyContent="center"
@@ -158,15 +151,19 @@ export default function toepgambar() {
           </Grid>
           <Grid item xs={12} md={12} lg={12}>
             Kunci Jawaban
-            <TextField
-              id="outlined-textarea"
-              label="Copy Jawaban Benar"
-              multiline
-              size='small'
+            <Select
+              native
               fullWidth
               required
+              sx={{ mb: 2, height: 30 }}
               {...register("jawaban_benar")}
-            />
+            >
+              <option>Pilih Jawaban Benar...</option>
+              <option value="jawaban_a">Jawaban A</option>
+              <option value="jawaban_b">Jawaban B</option>
+              <option value="jawaban_c">Jawaban C</option>
+              <option value="jawaban_d">Jawaban D</option>
+            </Select>
             <Button variant="contained" color='primary' type='submit'
               sx={{
                 mt: 2,

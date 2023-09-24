@@ -10,26 +10,24 @@ import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import axios from 'axios';
 import SweatAlertTimer from '@/config/SweatAlert/timer';
+import { setPartSoal } from '../../config/redux/slices/partSoalSlice'
 
 export default function toepaudio() {
   const [audio, setAudio] = useState(null)
-  const { register, handleSubmit, setValue } = useForm();
+  const { register, handleSubmit, setValue, reset } = useForm();
   const { data: session, status } = useSession();
+  const dispatch = useDispatch();
 
   const kategoriSoal = useSelector((state) => state.kategoriSoal.kategoriSoalShow);
   const jenisSoal = useSelector((state) => state.jenisSoal.jenisSoalShow);
+  const partSoal = useSelector((state) => state.partSoal.partSoalShow);
+  console.log(partSoal)
 
   useEffect(() => {
-    if (kategoriSoal) {
-      setValue("kategori_soal", kategoriSoal)
-    }
-    if (jenisSoal) {
-      setValue("jenis_soal", jenisSoal)
-    }
     if (audio) {
       setValue("fileSoal", audio)
     }
-  }, [kategoriSoal, jenisSoal, audio, setValue])
+  }, [audio, setValue])
 
   const handleChange = (e) => {
     if (e.target.files.length) {
@@ -46,6 +44,7 @@ export default function toepaudio() {
         },
       })
       SweatAlertTimer(response.data.message, "success");
+      reset();
     }
     catch (error) {
       SweatAlertTimer("Failed to create soal", "error");
@@ -55,8 +54,21 @@ export default function toepaudio() {
   return (
     <ThemeProvider theme={theme}>
       <Box component="form" onSubmit={handleSubmit(onSubmit)}
-        marginTop={2}>
-        Soal {kategoriSoal} Jenis {jenisSoal}
+        marginTop={5}>
+        <Grid item xs={12} md={12} lg={12}>
+          Part Soal:
+          <Select
+            native
+            required
+            sx={{ mb: 2, ml: 2, height: 30 }}
+            onChange={(e) => dispatch(setPartSoal(e.target.value))}
+          >
+            <option>Pilih Part Soal...</option>
+            <option value="RESPONSES">Responses</option>
+            <option value="CONVERSATION">Conversation</option>
+            <option value="MINI TALKS">Mini Talks</option>
+          </Select>
+        </Grid>
         <Box
           marginTop={3}
           marginBottom={3}
@@ -70,7 +82,7 @@ export default function toepaudio() {
 
           </IconButton>
         </Box>
-        <TextField
+        {/* <TextField
           id="outlined-textarea"
           label="Ketikkan Soal..."
           multiline
@@ -78,10 +90,10 @@ export default function toepaudio() {
           fullWidth
           sx={{ mb: 2 }}
           {...register("soal")}
-        />
+        /> */}
         Jawaban
         <Grid container spacing={2}>
-          <Grid item xs={12} md={6} lg={4}>
+          <Grid item xs={12} md={6} lg={3}>
             <TextField
               id="outlined-textarea"
               label="Jawaban A"
@@ -92,7 +104,7 @@ export default function toepaudio() {
               {...register("jawaban_a")}
             />
           </Grid>
-          <Grid item xs={12} md={6} lg={4}>
+          <Grid item xs={12} md={6} lg={3}>
             <TextField
               id="outlined-textarea"
               label="Jawaban B"
@@ -103,7 +115,7 @@ export default function toepaudio() {
               {...register("jawaban_b")}
             />
           </Grid>
-          <Grid item xs={12} md={6} lg={4}>
+          <Grid item xs={12} md={6} lg={3}>
             <TextField
               id="outlined-textarea"
               label="Jawaban C"
@@ -114,7 +126,7 @@ export default function toepaudio() {
               {...register("jawaban_c")}
             />
           </Grid>
-          <Grid item xs={12} md={6} lg={4}>
+          <Grid item xs={12} md={6} lg={3}>
             <TextField
               id="outlined-textarea"
               label="Jawaban D"
@@ -125,36 +137,60 @@ export default function toepaudio() {
               {...register("jawaban_d")}
             />
           </Grid>
-          <Grid item xs={12} md={6} lg={4}>
+          <Grid item xs={12} md={6} lg={3}>
             <TextField
               id="outlined-textarea"
-              label="Jawaban E (Opsional)"
-              multiline
-              rows={2}
-              fullWidth
-              {...register("jawaban_e")}
-            />
-          </Grid>
-          <Grid item xs={12} md={12} lg={12}>
-            Kunci Jawaban
-            <TextField
-              id="outlined-textarea"
-              label="Copy Jawaban Benar"
-              multiline
-              size='small'
+              label="Point"
+              size="small"
+              type="number"
               fullWidth
               required
-              {...register("jawaban_benar")}
+              sx={{ mt: 2 }}
+              {...register("skor", {
+                valueAsNumber: true,
+              })}
             />
-            <Button variant="contained" color='primary' type='submit'
+          </Grid>
+          <Grid item xs={12} md={6} lg={3}>
+            <TextField
+              id="outlined-textarea"
+              label="Waktu"
+              size="small"
+              type="number"
+              fullWidth
+              required
+              sx={{ mt: 2 }}
+              {...register("durasi", {
+                valueAsNumber: true,
+              })}
+            />
+          </Grid>
+          <Grid item xs={12} md={6} lg={3}>
+            Kunci Jawaban
+            <Select
+              native
+              fullWidth
+              required
+              sx={{ mb: 2, height: 30 }}
+              {...register("jawaban_benar")}
+            >
+              <option>Pilih Jawaban Benar...</option>
+              <option value="a">Jawaban A</option>
+              <option value="b">Jawaban B</option>
+              <option value="c">Jawaban C</option>
+              <option value="d">Jawaban D</option>
+            </Select>
+          </Grid>
+          <Grid item xs={12} md={6} lg={3}>
+            <Button variant="contained" color='primary' type='submit' fullWidth
               sx={{
-                marginTop: 2,
+                marginTop: 2
               }}>
               Simpan
             </Button>
           </Grid>
         </Grid>
       </Box>
-    </ThemeProvider>
+    </ThemeProvider >
   )
 }

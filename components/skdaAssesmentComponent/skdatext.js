@@ -1,10 +1,24 @@
+'use client';
+
 import { Box, TextField, Grid, Button, Select } from '@mui/material'
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from 'react-redux'
+import { useSession } from "next-auth/react";
+import { useEffect } from 'react';
+import axios from 'axios';
+import SweatAlertTimer from '@/config/SweatAlert/timer';
 
 export default function skdatext() {
+  const { register, handleSubmit, setValue, reset } = useForm();
+
+  const { data: session, status } = useSession();
+
+  const partSoal = useSelector((state) => state.partSoal.partSoalShow);
+
   return (
     <Box
       marginTop={2}>
-      Soal SKDA Jenis Text
+      Soal TKDA Jenis Text
       <TextField
         id="outlined-textarea"
         label="Ketikkan Soal..."
@@ -15,70 +29,71 @@ export default function skdatext() {
       />
       Jawaban
       <Grid container spacing={2}>
-        <Grid item xs={12} md={6} lg={6}>
+        <Grid item xs={12} md={6} lg={2}>
           <TextField
             id="outlined-textarea"
             label="Jawaban A"
-            multiline
-            rows={2}
+            size='small'
             fullWidth
             required
           />
         </Grid>
-        <Grid item xs={12} md={6} lg={6}>
+        <Grid item xs={12} md={6} lg={2}>
           <TextField
             id="outlined-textarea"
             label="Jawaban B"
-            multiline
-            rows={2}
+            size='small'
             fullWidth
             required
           />
         </Grid>
-        <Grid item xs={12} md={6} lg={6}>
+        <Grid item xs={12} md={6} lg={2}>
           <TextField
             id="outlined-textarea"
             label="Jawaban C"
-            multiline
-            rows={2}
+            size='small'
             fullWidth
             required
           />
         </Grid>
-        <Grid item xs={12} md={6} lg={6}>
+        <Grid item xs={12} md={6} lg={2}>
           <TextField
             id="outlined-textarea"
             label="Jawaban D"
-            multiline
-            rows={2}
+            size='small'
             fullWidth
             required
           />
         </Grid>
-        <Grid item xs={12} md={6} lg={6}>
+        <Grid item xs={12} md={6} lg={2}>
           <TextField
             id="outlined-textarea"
-            label="Jawaban E (Opsional)"
-            multiline
-            rows={2}
+            label="Jawaban E"
+            size='small'
             fullWidth
+            required
           />
         </Grid>
-        <Grid item xs={12} md={6} lg={6}>
+        <Grid item xs={12} md={6} lg={4}>
+          Kunci Jawaban
           <Select
             native
             fullWidth
             required
             sx={{ mb: 2, height: 30 }}
+            {...register("jawaban_benar")}
           >
             <option>Pilih Jawaban Benar...</option>
-            <option value={10}>Jawaban A</option>
-            <option value={10}>Jawaban B</option>
-            <option value={10}>Jawaban C</option>
-            <option value={10}>Jawaban D</option>
-            <option value={10}>Jawaban E</option>
+            <option value="jawaban_a">Jawaban A</option>
+            <option value="jawaban_b">Jawaban B</option>
+            <option value="jawaban_c">Jawaban C</option>
+            <option value="jawaban_d">Jawaban D</option>
+            <option value="jawaban_d">Jawaban E</option>
           </Select>
-          <Button variant="contained">
+          <Button variant="contained" type="submit"
+            sx={{
+              marginTop: 2,
+            }}>
             Simpan
           </Button>
         </Grid>

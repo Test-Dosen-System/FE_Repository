@@ -7,10 +7,11 @@ import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import axios from 'axios';
 import SweatAlertTimer from '@/config/SweatAlert/timer';
+import TextFormattingTool from '../TextFormattingTool';
 
 export default function toeptext() {
   const dispatch = useDispatch();
-  const { register, handleSubmit, setValue } = useForm();
+  const { register, handleSubmit, setValue, reset } = useForm();
 
   const { data: session, status } = useSession();
 
@@ -18,23 +19,28 @@ export default function toeptext() {
   const jenisSoal = useSelector((state) => state.jenisSoal.jenisSoalShow);
   // const idUser = session.user.data.payload.id;
   // console.log(session.user.token)
+  const partSoal = "READING SECTION";
+
   useEffect(() => {
-    if (kategoriSoal) {
-      setValue("kategori_soal", kategoriSoal)
-    }
-    if (jenisSoal) {
-      setValue("jenis_soal", jenisSoal)
-    }
-  }, [kategoriSoal, jenisSoal, setValue])
+    // if (kategoriSoal) {
+    //   setValue("kategori_soal", kategoriSoal)
+    // }
+    // if (jenisSoal) {
+    //   setValue("jenis_soal", jenisSoal)
+    // }
+    setValue("part_soal", partSoal)
+  }, [partSoal, setValue])
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + '/soal/create-soal-teks', data, {
+      console.log(data)
+      const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + '/soal-toep/create-soal-teks', data, {
         headers: {
           'Authorization': `Bearer ${session.user.token}`
         },
       })
       SweatAlertTimer(response.data.message, "success");
+      reset();
     }
     catch (error) {
       SweatAlertTimer("Failed to create soal", "error");
@@ -44,12 +50,23 @@ export default function toeptext() {
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}
       marginTop={2}>
-      Soal {kategoriSoal} Jenis {jenisSoal}
+      {/* <TextFormattingTool /> */}
+      Part Soal: Reading Section
+      <TextField
+        id="outlined-textarea"
+        label="Paragraph..."
+        multiline
+        rows={4}
+        fullWidth
+        sx={{ mb: 2 }}
+        required
+        {...register("paragraph")}
+      />
       <TextField
         id="outlined-textarea"
         label="Ketikkan Soal..."
         multiline
-        rows={4}
+        rows={2}
         fullWidth
         sx={{ mb: 2 }}
         required
@@ -57,7 +74,7 @@ export default function toeptext() {
       />
       Jawaban
       <Grid container spacing={2}>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} md={6} lg={3}>
           <TextField
             id="outlined-textarea"
             label="Jawaban A"
@@ -68,7 +85,7 @@ export default function toeptext() {
             {...register("jawaban_a")}
           />
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} md={6} lg={3}>
           <TextField
             id="outlined-textarea"
             label="Jawaban B"
@@ -79,7 +96,7 @@ export default function toeptext() {
             {...register("jawaban_b")}
           />
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} md={6} lg={3}>
           <TextField
             id="outlined-textarea"
             label="Jawaban C"
@@ -90,7 +107,7 @@ export default function toeptext() {
             {...register("jawaban_c")}
           />
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} md={6} lg={3}>
           <TextField
             id="outlined-textarea"
             label="Jawaban D"
@@ -101,30 +118,52 @@ export default function toeptext() {
             {...register("jawaban_d")}
           />
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} md={6} lg={3}>
           <TextField
             id="outlined-textarea"
-            label="Jawaban E (Opsional)"
-            multiline
-            rows={2}
+            label="Point"
+            size="small"
             fullWidth
-            {...register("jawaban_e")}
+            type="number"
+            required
+            sx={{ mt: 2 }}
+            {...register("skor", {
+              valueAsNumber: true,
+            })}
           />
-          {/* <input type="hidden" {...register('kategori_soal')} />
-          <input type="hidden" {...register('jenis_soal')} /> */}
         </Grid>
-        <Grid item xs={12} md={12} lg={12}>
-          Kunci Jawaban
+        <Grid item xs={12} md={6} lg={3}>
           <TextField
             id="outlined-textarea"
-            label="Copy Jawaban Benar"
-            multiline
-            size='small'
+            label="Waktu"
+            size="small"
+            fullWidth
+            type="number"
+            required
+            sx={{ mt: 2 }}
+            {...register("durasi", {
+              valueAsNumber: true,
+            })}
+          />
+        </Grid>
+        <Grid item xs={12} md={6} lg={3}>
+          Kunci Jawaban
+          <Select
+            native
             fullWidth
             required
+            sx={{ mb: 2, height: 30 }}
             {...register("jawaban_benar")}
-          />
-          <Button variant="contained" type="submit"
+          >
+            <option>Pilih Jawaban Benar...</option>
+            <option value="a">Jawaban A</option>
+            <option value="b">Jawaban B</option>
+            <option value="c">Jawaban C</option>
+            <option value="d">Jawaban D</option>
+          </Select>
+        </Grid>
+        <Grid item xs={12} md={6} lg={3}>
+          <Button variant="contained" type="submit" fullWidth
             sx={{
               marginTop: 2,
             }}>
