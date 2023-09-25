@@ -14,7 +14,7 @@ export default function choose() {
         marginTop={5}
         marginBottom={5}>
         <Typography variant="h5" >
-          Pilih Jenis Soal dan Kategori Soal
+          Pilih Part Soal
         </Typography>
       </Box>
     </ThemeProvider>

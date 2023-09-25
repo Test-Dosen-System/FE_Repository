@@ -1,42 +1,48 @@
 'use client';
 
-import { Box, TextField, Grid, Button, Select } from '@mui/material'
+import { Box, TextField, Grid, Button, Select, IconButton } from '@mui/material'
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import Image from 'next/image'
 import { useDispatch, useSelector } from 'react-redux'
 import { useSession } from "next-auth/react";
 import { useForm } from 'react-hook-form';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import SweatAlertTimer from '@/config/SweatAlert/timer';
 import TextFormattingTool from '../TextFormattingTool';
 
 export default function toeptext() {
+  const [image, setImage] = useState({ preview: '/upload.png', raw: '' })
   const dispatch = useDispatch();
   const { register, handleSubmit, setValue, reset } = useForm();
 
   const { data: session, status } = useSession();
 
-  const kategoriSoal = useSelector((state) => state.kategoriSoal.kategoriSoalShow);
-  const jenisSoal = useSelector((state) => state.jenisSoal.jenisSoalShow);
-  // const idUser = session.user.data.payload.id;
-  // console.log(session.user.token)
   const partSoal = "READING SECTION";
 
   useEffect(() => {
-    // if (kategoriSoal) {
-    //   setValue("kategori_soal", kategoriSoal)
-    // }
-    // if (jenisSoal) {
-    //   setValue("jenis_soal", jenisSoal)
-    // }
+    if (image) {
+      setValue("fileSoal", image.raw)
+    }
     setValue("part_soal", partSoal)
-  }, [partSoal, setValue])
+  }, [partSoal, image, setValue])
+
+  const handleChange = (e) => {
+    if (e.target.files.length) {
+      setImage({
+        preview: URL.createObjectURL(e.target.files[0]),
+        raw: e.target.files[0]
+      })
+    }
+  }
 
   const onSubmit = async (data) => {
     try {
       console.log(data)
       const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + '/soal-toep/create-soal-teks', data, {
         headers: {
-          'Authorization': `Bearer ${session.user.token}`
+          'Authorization': `Bearer ${session.user.token}`,
+          'Content-Type': 'multipart/form-data'
         },
       })
       SweatAlertTimer(response.data.message, "success");
@@ -58,10 +64,37 @@ export default function toeptext() {
         multiline
         rows={4}
         fullWidth
-        sx={{ mb: 2 }}
+        sx={{ mb: 2, mt: 2 }}
         required
         {...register("paragraph")}
       />
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        marginTop={5}
+        marginBottom={5}
+      >
+        <Image
+          src={image.preview}
+          alt="Picture of the author"
+          width={300}
+          height={300}
+          style={{ objectFit: "cover" }}
+        />
+        <IconButton
+          color="primary"
+          aria-label="upload picture"
+          component="label"
+        >
+          <input hidden accept="image/*" type="file" onChange={handleChange} />
+          <AddAPhotoIcon
+            sx={{
+              width: 35,
+              height: 35,
+            }} />
+        </IconButton>
+      </Box>
       <TextField
         id="outlined-textarea"
         label="Ketikkan Soal..."
