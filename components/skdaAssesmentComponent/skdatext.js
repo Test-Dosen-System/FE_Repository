@@ -1,103 +1,58 @@
 'use client';
 
-import { Box, TextField, Grid, Button, Select } from '@mui/material'
-import { useForm } from "react-hook-form";
+import { Box, Grid, Select } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
-import { useSession } from "next-auth/react";
-import { useEffect } from 'react';
-import axios from 'axios';
-import SweatAlertTimer from '@/config/SweatAlert/timer';
+import { setPartSoal } from '../../config/redux/slices/partSoalSlice';
+import Choose from '../toepAssesmentComponent/choose';
+import TeksSkdaComp from './tkdaComp/teksTkdaComp';
 
 export default function skdatext() {
-  const { register, handleSubmit, setValue, reset } = useForm();
 
-  const { data: session, status } = useSession();
+  const dispatch = useDispatch();
 
   const partSoal = useSelector((state) => state.partSoal.partSoalShow);
 
+  const renderComponent = () => {
+    switch (partSoal) {
+      case "DUMMY ANALOGY":
+        return <TeksSkdaComp />;
+      case "DUMMY LOGICAL REASONING":
+        return <TeksSkdaComp />;
+      case "DUMMY ANALITICAL REASONING":
+        return <TeksSkdaComp />;
+      case "DUMMY ARITMETIC":
+        return <TeksSkdaComp />;
+      case "DUMMY NUMBER SERIES":
+        return <TeksSkdaComp />;
+      case "WORD PORBLEM":
+        return <TeksSkdaComp />;
+      default:
+        return <Choose />;
+    }
+  };
+
   return (
     <Box
-      marginTop={2}>
-      Soal TKDA Jenis Text
-      <TextField
-        id="outlined-textarea"
-        label="Ketikkan Soal..."
-        multiline
-        rows={4}
-        fullWidth
-        sx={{ mb: 2 }}
-      />
-      Jawaban
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={6} lg={2}>
-          <TextField
-            id="outlined-textarea"
-            label="Jawaban A"
-            size='small'
-            fullWidth
-            required
-          />
-        </Grid>
-        <Grid item xs={12} md={6} lg={2}>
-          <TextField
-            id="outlined-textarea"
-            label="Jawaban B"
-            size='small'
-            fullWidth
-            required
-          />
-        </Grid>
-        <Grid item xs={12} md={6} lg={2}>
-          <TextField
-            id="outlined-textarea"
-            label="Jawaban C"
-            size='small'
-            fullWidth
-            required
-          />
-        </Grid>
-        <Grid item xs={12} md={6} lg={2}>
-          <TextField
-            id="outlined-textarea"
-            label="Jawaban D"
-            size='small'
-            fullWidth
-            required
-          />
-        </Grid>
-        <Grid item xs={12} md={6} lg={2}>
-          <TextField
-            id="outlined-textarea"
-            label="Jawaban E"
-            size='small'
-            fullWidth
-            required
-          />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          Kunci Jawaban
-          <Select
-            native
-            fullWidth
-            required
-            sx={{ mb: 2, height: 30 }}
-            {...register("jawaban_benar")}
-          >
-            <option>Pilih Jawaban Benar...</option>
-            <option value="jawaban_a">Jawaban A</option>
-            <option value="jawaban_b">Jawaban B</option>
-            <option value="jawaban_c">Jawaban C</option>
-            <option value="jawaban_d">Jawaban D</option>
-            <option value="jawaban_d">Jawaban E</option>
-          </Select>
-          <Button variant="contained" type="submit"
-            sx={{
-              marginTop: 2,
-            }}>
-            Simpan
-          </Button>
-        </Grid>
+      marginTop={5}>
+      <Grid item xs={12} md={12} lg={12}>
+        Part Soal:
+        <Select
+          native
+          required
+          sx={{ mb: 2, ml: 2, height: 30 }}
+          onChange={(e) => dispatch(setPartSoal(e.target.value))}
+        >
+          <option>Pilih Part Soal...</option>
+          <option value="DUMMY ANALOGY">Analogy</option>
+          <option value="DUMMY LOGICAL REASONING">Logical Reasoning</option>
+          <option value="DUMMY ANALITICAL REASONING">Analitical Reasoning</option>
+          <option value="DUMMY ARITMETIC">Aritmatic</option>
+          <option value="DUMMY NUMBER SERIES">Number Series</option>
+          <option value="WORD PORBLEM">Word Problem</option>
+        </Select>
       </Grid>
+      {renderComponent()}
+
     </Box>
   )
 }

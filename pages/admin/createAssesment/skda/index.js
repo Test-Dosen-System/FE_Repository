@@ -1,9 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { useSession } from "next-auth/react";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -19,17 +16,8 @@ import theme from '../../../../config/theme'
 import { useDispatch, useSelector } from 'react-redux'
 import { setKategoriSoalSkda } from '../../../../config/redux/slices/kategoriSoalSkdaSlice'
 
-const defaultTheme = createTheme();
-
 export default function CreateAssesmentSkda() {
 
-  const router = useRouter();
-  const { data: session, status } = useSession();
-  // useEffect(() => {
-  //   if (!session) {
-  //     router.push('/admin/login')
-  //   }
-  // }, [])
 
   const dispatch = useDispatch();
 
@@ -43,18 +31,16 @@ export default function CreateAssesmentSkda() {
         return <SkdaText />;
       case "gambarskda":
         return <SkdaGambar />;
-      case "audioskda":
-        return <SkdaAudio />;
-      default:
-        return <SkdaText />;
+      // case "audioskda":
+      //   return <SkdaAudio />;
     }
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <Navbar navName="Buat Soal Test SKDA" />
+        <Navbar navName="Buat Soal Test TKDA" />
         <Box
           component="main"
           sx={{
@@ -79,7 +65,6 @@ export default function CreateAssesmentSkda() {
                     height: '100%',
                   }}
                 >
-                  Jenis Soal
                   <Grid item xs={12} md={12} lg={12}>
                     <Button variant={kategoriSoalSkdaShow === "teksskda" ? "contained" : "outlined"} color="primary" onClick={() => dispatch(setKategoriSoalSkda("teksskda"))}
                       sx={{
