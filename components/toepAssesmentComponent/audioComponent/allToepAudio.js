@@ -16,6 +16,7 @@ export default function AllToepAudio() {
   const { data: session } = useSession();
   const partSoal = useSelector((state) => state.partSoal.partSoalShow);
   // console.log(partSoal)
+  const soal = ""
 
   useEffect(() => {
     if (audio) {
@@ -24,7 +25,8 @@ export default function AllToepAudio() {
     if (partSoal) {
       setValue("part_soal", partSoal)
     }
-  }, [audio, partSoal, setValue])
+    setValue("soal", soal)
+  }, [audio, partSoal, soal, setValue])
 
   const handleChange = (e) => {
     if (e.target.files.length) {
@@ -34,8 +36,7 @@ export default function AllToepAudio() {
 
   const onSubmit = async (data) => {
     try {
-      // console.log(data)
-      const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + '/soal/create-soal-audio', data, {
+      const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + '/soal-toep/create-soal-audio', data, {
         headers: {
           'Authorization': `Bearer ${session.user.token}`,
           'Content-Type': 'multipart/form-data'
