@@ -17,11 +17,14 @@ export default function TeksSkdaComp() {
 
   const partSoal = useSelector((state) => state.partSoal.partSoalShow);
   console.log(partSoal)
+  const soal = ""
+
   useEffect(() => {
     if (partSoal) {
       setValue("part_soal", partSoal)
     }
-  }, [partSoal, setValue])
+    setValue("soal", soal)
+  }, [partSoal, soal, setValue])
 
   const onSubmit = async (data) => {
     try {
@@ -97,7 +100,7 @@ export default function TeksSkdaComp() {
               {...register("jawaban_d")}
             />
           </Grid>
-          <Grid item xs={12} md={6} lg={2}>
+          {/* <Grid item xs={12} md={6} lg={2}>
             <TextField
               id="outlined-textarea"
               label="Jawaban E"
@@ -105,7 +108,7 @@ export default function TeksSkdaComp() {
               fullWidth
               {...register("jawaban_e")}
             />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12} md={6} lg={3}>
             <TextField
               id="outlined-textarea"
@@ -148,7 +151,7 @@ export default function TeksSkdaComp() {
               <option value="b">Jawaban B</option>
               <option value="c">Jawaban C</option>
               <option value="d">Jawaban D</option>
-              <option value="e">Jawaban E</option>
+              {/* <option value="e">Jawaban E</option> */}
             </Select>
           </Grid>
           <Grid item xs={12} md={6} lg={3}>

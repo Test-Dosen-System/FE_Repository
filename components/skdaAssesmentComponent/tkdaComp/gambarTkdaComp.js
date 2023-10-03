@@ -26,11 +26,14 @@ export default function GambarTkdaComp() {
 
   const partSoal = useSelector((state) => state.partSoal.partSoalShow);
   console.log(partSoal)
+  const soal = ""
+
   useEffect(() => {
     if (partSoal) {
       setValue("part_soal", partSoal)
     }
-  }, [partSoal, setValue])
+    setValue("soal", soal)
+  }, [partSoal, soal, setValue])
 
   useEffect(() => {
     if (image) {
@@ -58,7 +61,7 @@ export default function GambarTkdaComp() {
 
   const onSubmit = async (data) => {
     try {
-      // console.log(data)
+      console.log(data)
       const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + '/soal-tkda/create-soal-gambar', data, {
         headers: {
           'Authorization': `Bearer ${session.user.token}`,
