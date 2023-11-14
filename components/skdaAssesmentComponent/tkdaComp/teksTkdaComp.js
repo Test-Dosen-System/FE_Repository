@@ -9,6 +9,7 @@ import axios from 'axios';
 import SweatAlertTimer from '@/config/SweatAlert/timer';
 import theme from '@/config/theme';
 import { Box, TextField, Grid, Button, Select, IconButton } from '@mui/material'
+import RichTextEditor from '@/components/richTextEditor';
 
 export default function TeksSkdaComp() {
   const { register, handleSubmit, setValue, reset } = useForm();
@@ -28,11 +29,10 @@ export default function TeksSkdaComp() {
 
   const onSubmit = async (data) => {
     try {
-      // console.log(data)
+      console.log(data)
       const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + '/soal-tkda/create-soal-teks', data, {
         headers: {
           'Authorization': `Bearer ${session.user.token}`,
-          'Content-Type': 'multipart/form-data'
         },
       })
       SweatAlertTimer(response.data.message, "success");
@@ -109,7 +109,7 @@ export default function TeksSkdaComp() {
               {...register("jawaban_e")}
             />
           </Grid> */}
-          <Grid item xs={12} md={6} lg={3}>
+          <Grid item xs={12} md={6} lg={2}>
             <TextField
               id="outlined-textarea"
               label="Point"
@@ -117,7 +117,6 @@ export default function TeksSkdaComp() {
               fullWidth
               type="number"
               required
-              sx={{ mt: 2 }}
               {...register("skor", {
                 valueAsNumber: true,
               })}

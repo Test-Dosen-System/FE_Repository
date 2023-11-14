@@ -1,47 +1,43 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-// import { useState } from 'react'
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useSelector, useDispatch } from 'react-redux';
+import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Container from '@mui/material/Container';
+import { Box, Toolbar, Container, Paper, Grid, Button } from '@mui/material';
 import Navbar from '../../../../components/admincomponent/navbar'
-import { DataGrid } from '@mui/x-data-grid';
-
-const columns = [
-  { field: 'id', headerName: 'ID' },
-  { field: 'title', headerName: 'Title', width: 300 },
-  { field: 'description', headerName: 'Description', width: 600 },
-  {
-    field: 'thumbnail',
-    headerName: 'Thumbnail',
-    width: 100,
-    renderCell: (params) => (
-      <img src={params.value} alt="Item" style={{ width: '100%', height: 'auto' }} />
-    ),
-  },
-]
-
-const defaultTheme = createTheme();
+import theme from '@/config/theme';
+import { setPartSoal } from '@/config/redux/slices/partSoalSlice';
+import Conversation from '@/components/toepAssesmentComponent/showComponent/conversation';
+import LongerConversation from '@/components/toepAssesmentComponent/showComponent/longerConversation';
+import MiniTalks from '@/components/toepAssesmentComponent/showComponent/miniTalks';
+import ReadingSection from '@/components/toepAssesmentComponent/showComponent/readingSection';
+import Responses from '@/components/toepAssesmentComponent/showComponent/responses';
+import Choose from '@/components/toepAssesmentComponent/choose';
 
 export default function AssesmentToep() {
-  const [tableData, setTableData] = useState([])
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch('https://dummyjson.com/products')
-      const json = await res.json()
-      setTableData(json.products)
-      console.log(json)
+  const partSoal = useSelector((state) => state.partSoal.partSoalShow);
+
+  const renderComponent = () => {
+    switch (partSoal) {
+      case "READING SECTION":
+        return <ReadingSection />;
+      case "RESPONSES":
+        return <Responses />;
+      case "CONVERSATION":
+        return <Conversation />;
+      case "LONGER CONVERSATION":
+        return <LongerConversation />;
+      case "MINI TALKS":
+        return <MiniTalks />;
+      default:
+        return <Choose />;
     }
-    fetchData()
-  }, [])
-
+  }
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <Navbar navName="Daftar Soal TOEP" />
@@ -59,14 +55,53 @@ export default function AssesmentToep() {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            All TOEP Assesment Here
-            <div style={{ height: 700, width: '100%' }}>
-              <DataGrid
-                rows={tableData}
-                columns={columns}
-                pageSize={12}
-              />
-            </div>
+          <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '100%',
+                  }}
+                >
+            <Grid item xs={12} md={12} lg={12}>
+            <Button variant={partSoal === "READING SECTION" ? "contained" : "outlined"} color="primary" onClick={() => dispatch(setPartSoal("READING SECTION"))}
+              sx={{
+                mr: 2,
+                width: "18%"
+              }}>
+                Reading Section
+            </Button>
+            <Button variant={partSoal === "RESPONSES" ? "contained" : "outlined"} color="primary" onClick={() => dispatch(setPartSoal("RESPONSES"))}
+              sx={{
+                mr: 2,
+                width: "18%"
+              }}>
+                Responses
+            </Button>
+            <Button variant={partSoal === "CONVERSATION" ? "contained" : "outlined"} color="primary" onClick={() => dispatch(setPartSoal("CONVERSATION"))}
+              sx={{
+                mr: 2,
+                width: "18%"
+              }}>
+                Conversation
+            </Button>
+            <Button variant={partSoal === "LONGER CONVERSATION" ? "contained" : "outlined"} color="primary" onClick={() => dispatch(setPartSoal("LONGER CONVERSATION"))}
+              sx={{
+                mr: 2,
+                width: "18%"
+              }}>
+                Longer Conversation
+            </Button>
+            <Button variant={partSoal === "MINI TALKS" ? "contained" : "outlined"} color="primary" onClick={() => dispatch(setPartSoal("MINI TALKS"))}
+              sx={{
+                mr: 2,
+                width: "18%"
+              }}>
+                Mini Talks
+            </Button>
+            {renderComponent()}
+            </Grid>
+            </Paper>
           </Container>
         </Box>
       </Box>

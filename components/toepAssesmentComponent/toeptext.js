@@ -1,24 +1,24 @@
-'use client';
+"use client"
 
-import { Box, TextField, Grid, Button, Select, IconButton } from '@mui/material'
-import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
-import Image from 'next/image'
-import { useDispatch, useSelector } from 'react-redux'
-import { useSession } from "next-auth/react";
-import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import SweatAlertTimer from '@/config/SweatAlert/timer';
-import TextFormattingTool from '../TextFormattingTool';
+import { Box, TextField, Grid, Button, Select, IconButton } from "@mui/material"
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto"
+import Image from "next/image"
+import { useDispatch, useSelector } from "react-redux"
+import { useSession } from "next-auth/react"
+import { useForm } from "react-hook-form"
+import { useEffect, useState } from "react"
+import axios from "axios"
+import SweatAlertTimer from "@/config/SweatAlert/timer"
+import TextFormattingTool from "../TextFormattingTool"
 
 export default function toeptext() {
-  const [image, setImage] = useState({ preview: '/upload.png', raw: '' })
-  const dispatch = useDispatch();
-  const { register, handleSubmit, setValue, reset } = useForm();
+  const [image, setImage] = useState({ preview: "/upload.png", raw: "" })
+  const dispatch = useDispatch()
+  const { register, handleSubmit, setValue, reset } = useForm()
 
-  const { data: session, status } = useSession();
+  const { data: session, status } = useSession()
 
-  const partSoal = "READING SECTION";
+  const partSoal = "READING SECTION"
 
   useEffect(() => {
     if (image) {
@@ -31,7 +31,7 @@ export default function toeptext() {
     if (e.target.files.length) {
       setImage({
         preview: URL.createObjectURL(e.target.files[0]),
-        raw: e.target.files[0]
+        raw: e.target.files[0],
       })
     }
   }
@@ -39,33 +39,33 @@ export default function toeptext() {
   const onSubmit = async (data) => {
     try {
       console.log(data)
-      const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + '/soal-toep/create-soal-teks', data, {
-        headers: {
-          'Authorization': `Bearer ${session.user.token}`,
-          'Content-Type': 'multipart/form-data'
-        },
-      })
-      SweatAlertTimer(response.data.message, "success");
-      reset();
-    }
-    catch (error) {
-      SweatAlertTimer("Failed to create soal", "error");
+      const response = await axios.post(
+        process.env.NEXT_PUBLIC_API_URL + "/soal-toep/create-soal-teks",
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${session.user.token}`,
+          },
+        }
+      )
+      SweatAlertTimer(response.data.message, "success")
+      reset()
+    } catch (error) {
+      SweatAlertTimer("Failed to create soal", "error")
     }
   }
 
   return (
-    <Box component="form" onSubmit={handleSubmit(onSubmit)}
-      marginTop={2}>
+    <Box component="form" onSubmit={handleSubmit(onSubmit)} marginTop={2}>
       {/* <TextFormattingTool /> */}
       Part Soal: Reading Section
-      <TextField
+      {/* <TextField
         id="outlined-textarea"
         label="Paragraph..."
         multiline
         rows={4}
         fullWidth
         sx={{ mb: 2, mt: 2 }}
-        required
         {...register("paragraph")}
       />
       <Box
@@ -92,9 +92,10 @@ export default function toeptext() {
             sx={{
               width: 35,
               height: 35,
-            }} />
+            }}
+          />
         </IconButton>
-      </Box>
+      </Box> */}
       <TextField
         id="outlined-textarea"
         label="Ketikkan Soal..."
@@ -196,10 +197,14 @@ export default function toeptext() {
           </Select>
         </Grid>
         <Grid item xs={12} md={6} lg={3}>
-          <Button variant="contained" type="submit" fullWidth
+          <Button
+            variant="contained"
+            type="submit"
+            fullWidth
             sx={{
               marginTop: 2,
-            }}>
+            }}
+          >
             Simpan
           </Button>
         </Grid>

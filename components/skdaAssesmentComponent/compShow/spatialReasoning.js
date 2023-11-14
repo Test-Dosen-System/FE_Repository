@@ -1,0 +1,195 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import axios from "axios";
+import { DataGrid } from "@mui/x-data-grid";
+import {
+  Button,
+  IconButton,
+  Backdrop,
+  Box,
+  Modal,
+  Fade,
+  Typography,
+  TextField,
+  Grid,
+  Select,
+} from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import SweatAlertTimer from "@/config/SweatAlert/timer";
+import Image from "next/image";
+
+export default function spatialReasoning() {
+  const columns = [
+    {
+      field: "files",
+      headerName: "Soal",
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <img
+            src={params.value}
+            alt="Item"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        );
+      },
+    },
+    {
+      field: "jawaban_a",
+      headerName: "Jawaban A",
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <img
+            src={params.value}
+            alt="Item"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        );
+      },
+    },
+    {
+      field: "jawaban_b",
+      headerName: "Jawaban B",
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <img
+            src={params.value}
+            alt="Item"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        );
+      },
+    },
+    {
+      field: "jawaban_c",
+      headerName: "Jawaban C",
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <img
+            src={params.value}
+            alt="Item"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        );
+      },
+    },
+    {
+      field: "jawaban_d",
+      headerName: "Jawaban D",
+      width: 300,
+      renderCell: (params) => {
+        return (
+          <img
+            src={params.value}
+            alt="Item"
+            style={{ width: "70%", height: "100%", objectFit: "cover" }}
+          />
+        );
+      },
+    },
+    {
+      field: "jawaban_benar",
+      headerName: "Jawaban Benar",
+      width: 200,
+      // marginLeft: 10,
+      renderCell: (params) => {
+        return (
+          <img
+            src={params.value}
+            alt="Item"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        );
+      },
+    },
+    {
+      field: "action",
+      headerName: "Action",
+      width: 200,
+      renderCell: (params) => (
+        <div>
+          {/* <IconButton
+            size="small"
+            color="blueSky"
+            onClick={() => {
+              const fetchData = async () => {
+                const response = await axios.get(
+                  process.env.NEXT_PUBLIC_API_URL +
+                    `/soal-tkda/${params.row.id}`,
+                  {
+                    headers: {
+                      Authorization: `Bearer ${session.user.token}`,
+                    },
+                  }
+                );
+                setDetailData(response.data.data);
+                console.log(response.data.data);
+              };
+              fetchData();
+              handleOpen();
+            }}
+          >
+            <EditIcon />
+          </IconButton> */}
+          <IconButton
+            size="small"
+            color="error"
+            onClick={() => {
+              const deleteData = async () => {
+                await axios.delete(
+                  process.env.NEXT_PUBLIC_API_URL +
+                    `/soal-tkda/delete/${params.row.id}`,
+                  {
+                    headers: {
+                      Authorization: `Bearer ${session.user.token}`,
+                    },
+                  }
+                );
+              };
+              SweatAlertTimer("Data deleted successfully", "success"),
+                deleteData();
+              setUpdate(!update);
+            }}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </div>
+      ),
+    },
+  ];
+
+  const [data, setData] = useState([]);
+  console.log(data);
+  const [update, setUpdate] = useState(false);
+
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get(
+        process.env.NEXT_PUBLIC_API_URL +
+          `/soal-tkda?part_soal=SPATIAL REASONING`,
+        {
+          headers: {
+            Authorization: `Bearer ${session.user.token}`,
+          },
+        }
+      );
+      setData(response.data.data);
+      // console.log(response.data.data)
+    };
+    fetchData();
+  }, [update]);
+
+  return (
+    <div style={{ height: 600, width: "100%", marginTop: 10 }}>
+      <DataGrid rowHeight={100} rows={data} columns={columns} pageSize={12} />
+    </div>
+  );
+}
