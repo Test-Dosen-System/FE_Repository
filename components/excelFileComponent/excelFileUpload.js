@@ -29,14 +29,14 @@ export default function excelfileupload() {
   );
 
   useEffect(() => {
-    if (kategoriSoal) {
-      setValue("kategori_soal", kategoriSoal);
-    }
+    // if (kategoriSoal) {
+    //   setValue("kategori_soal", kategoriSoal);
+    // }
     if (excelFile) {
       setValue("file", excelFile);
     }
     setValue("startCell", "B2");
-  }, [kategoriSoal, excelFile, setValue]);
+  }, [excelFile, setValue]);
 
   const handleChange = (e) => {
     if (e.target.files.length) {
